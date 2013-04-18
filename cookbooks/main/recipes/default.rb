@@ -6,6 +6,7 @@
 
 # uncomment to turn on thinking sphinx/ultra sphinx. Remember to edit cookbooks/sphinx/recipes/default.rb first!
 # require_recipe "passenger_monitor_memory_limit"
+require_recipe "ey-passenger-tweaks"
 
 # require_recipe "sphinx"
 
