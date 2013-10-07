@@ -8,7 +8,7 @@
 # require_recipe "passenger_monitor_memory_limit"
 # require_recipe "ey-passenger-tweaks"
 
-# require_recipe "sphinx"
+require_recipe "sphinx"
 
 # uncomment to use the collectd recipe. See cookbooks/collectd/readme.md for documentation.
 # require_recipe "collectd"
