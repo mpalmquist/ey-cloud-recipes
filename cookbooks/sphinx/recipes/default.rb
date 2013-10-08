@@ -106,18 +106,18 @@ if utility_name
         })
       end
 
-      template "/data/#{app_name}/shared/config/sphinx.yml" do
-        owner node[:owner_name]
-        group node[:owner_name]
-        mode 0644
-        source "sphinx.yml.erb"
-        variables({
-          :app_name => app_name,
-          :address => sphinx_host,
-          :user => node[:owner_name],
-          :mem_limit => '32M'
-        })
-      end
+      # template "/data/#{app_name}/shared/config/sphinx.yml" do
+      #   owner node[:owner_name]
+      #   group node[:owner_name]
+      #   mode 0644
+      #   source "sphinx.yml.erb"
+      #   variables({
+      #     :app_name => app_name,
+      #     :address => sphinx_host,
+      #     :user => node[:owner_name],
+      #     :mem_limit => '32M'
+      #   })
+      # end
 
       gem_package "bundler" do
         source "http://rubygems.org"
