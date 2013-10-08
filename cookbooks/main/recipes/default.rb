@@ -9,6 +9,7 @@
 # require_recipe "ey-passenger-tweaks"
 
 require_recipe "sphinx"
+require_recipe "emerge"
 
 # uncomment to use the collectd recipe. See cookbooks/collectd/readme.md for documentation.
 # require_recipe "collectd"
