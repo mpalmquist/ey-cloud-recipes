@@ -260,18 +260,18 @@ else
 
       execute "monit reload"
 
-      if cron_interval
-        cron "sphinx index" do
-          action  :create
-          minute  "*/#{cron_interval}"
-          hour    '*'
-          day     '*'
-          month   '*'
-          weekday '*'
-          command "cd /data/#{app_name}/current && RAILS_ENV=#{node[:environment][:framework_env]} bundle exec rake #{flavor}:index"
-          user node[:owner_name]
-        end
-      end
+      # if cron_interval
+      #   cron "sphinx index" do
+      #     action  :create
+      #     minute  "*/#{cron_interval}"
+      #     hour    '*'
+      #     day     '*'
+      #     month   '*'
+      #     weekday '*'
+      #     command "cd /data/#{app_name}/current && RAILS_ENV=#{node[:environment][:framework_env]} bundle exec rake #{flavor}:index"
+      #     user node[:owner_name]
+      #   end
+      # end
     end
   end
 end
