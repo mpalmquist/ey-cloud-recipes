@@ -7,7 +7,7 @@
 appname = "SolarNexus3"
 
 # Uncomment the flavor of sphinx you want to use
-flavor = "thinking_sphinx"
+flavor = "ts"
 #flavor = "ultrasphinx"
 
 # If you want to install on a specific utility instance rather than
@@ -34,7 +34,7 @@ if utility_name
   if ['solo', 'app', 'app_master'].include?(node[:instance_role])
     run_for_app(appname) do |app_name, data|
       ey_cloud_report "Sphinx" do
-        message "configuring #{flavor}"
+        message "configuring sphinx (#{flavor})"
       end
 
       directory "/data/#{app_name}/shared/config/sphinx" do
@@ -62,7 +62,7 @@ if utility_name
   if node[:name] == utility_name
     run_for_app(appname) do |app_name, data|
       ey_cloud_report "Sphinx" do
-        message "configuring #{flavor}"
+        message "configuring Sphinx (#{flavor})"
       end
 
       directory "/var/run/sphinx" do
@@ -102,7 +102,7 @@ if utility_name
         variables({
           :app_name => app_name,
           :user => node[:owner_name],
-          :flavor => flavor
+          :flavor => flavor == 'ts' ? 'thinking_sphinx' : flavor
         })
       end
 
