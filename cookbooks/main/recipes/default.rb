@@ -46,13 +46,13 @@ require_recipe "whenever"
 #require_recipe "mongodb"
 
 #uncomment to run the resque recipe
-# require_recipe "resque"
+require_recipe "resque"
 
 #uncomment to run redis.yml recipe
 # require_recipe "redis-yml"
 
 #uncomment to run the resque-scheduler recipe
-# require_recipe "resque-scheduler"
+require_recipe "resque-scheduler"
 
 #uncomment to run the redis recipe
 #require_recipe "redis"
