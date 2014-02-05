@@ -210,7 +210,7 @@ else
           :app_name => app_name,
           :user => node[:owner_name],
           :env => node[:environment][:framework_env],
-          :flavor => flavor
+          :flavor => flavor == 'ts' ? 'thinking_sphinx' : flavor
         })
       end
 
