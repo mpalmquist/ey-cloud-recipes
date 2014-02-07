@@ -8,7 +8,7 @@ if ['solo', 'util'].include?(node[:instance_role])
     not_if { "gem list | grep resque" }
   end
 
-  worker_count = 2
+  worker_count = 3
 
   # case node[:ec2][:instance_type]
   # when 'm1.small' then worker_count = 2
@@ -36,7 +36,7 @@ if ['solo', 'util'].include?(node[:instance_role])
         owner node[:owner_name]
         group node[:owner_name]
         mode 0644
-        source "resque_wildcard.conf.erb"
+        source(count==0 ? "resque_mailer.conf.erb" : "resque_wildcard.conf.erb")
       end
     end
 
