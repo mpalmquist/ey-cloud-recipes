@@ -31,13 +31,25 @@ if ['solo', 'util'].include?(node[:instance_role])
       })
     end
 
-    worker_count.times do |count|
-      template "/data/#{app}/shared/config/resque_#{count}.conf" do
-        owner node[:owner_name]
-        group node[:owner_name]
-        mode 0644
-        source(count==0 ? "resque_mailer.conf.erb" : "resque_wildcard.conf.erb")
-      end
+    template "/data/#{app}/shared/config/resque_0.conf" do
+      owner node[:owner_name]
+      group node[:owner_name]
+      mode 0644
+      source 'resque_short_tasks.conf.erb'
+    end
+
+    template "/data/#{app}/shared/config/resque_1.conf" do
+      owner node[:owner_name]
+      group node[:owner_name]
+      mode 0644
+      source 'resque_no_parallel_execution.conf.erb'
+    end
+
+    template "/data/#{app}/shared/config/resque_2.conf" do
+      owner node[:owner_name]
+      group node[:owner_name]
+      mode 0644
+      source 'resque_long_and_short_tasks.conf.erb'
     end
 
     execute "ensure-resque-is-setup-with-monit" do
