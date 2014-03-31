@@ -8,8 +8,8 @@
 # * Problems to be solved:
 # ** Resque logs overwritten on start and stop (DONE)
 # ** Time for worker to stop
-#    Its pefrectly reasonable to expect a worker to need several minutes to stop. 
-#    In the resque Readme, GH  use resque to archive things and expect it to take 
+#    Its pefrectly reasonable to expect a worker to need several minutes to stop.
+#    In the resque Readme, GH  use resque to archive things and expect it to take
 #    10 minutes for eg. so a variable $WAIT_TIME is set.
 # ** Time for a worker to be allowed to run before being regaurded as stale
 # ** We need to kill with -QUIT first, before simply trying to terminate with -15
@@ -19,20 +19,20 @@
 #    murders the children suddenly.
 # ** ## INVALID ##
 #    We'd like to be able to use the COUNT= parameter. This saves some memory (30Mb+ per worker)
-#    but strips us of the ability to track the workers by memory, so an accompanying cron script 
-#    is required 
+#    but strips us of the ability to track the workers by memory, so an accompanying cron script
+#    is required
 #    ## Not going to do this. The resque source code mentions that this is only intended
 #    ##for use in development, so who are we to argue!
 # ** We'd like to be able to request a sudden death if required
 # ** Instancing. We may want > 1 worker instance (which currently equates to a monit stanza)
 #    to process a queue. The correct way is prob to have a diff conf for each stanza.
 #    Once customer (limos on ey05-s00522) worked around this with an instance parameter.
-#    One advantage of this over say having > 1 conf file specfify the same queue, is that 
-#    logging is arguably more handy per queue that per conf, and we can't do that by using 
+#    One advantage of this over say having > 1 conf file specfify the same queue, is that
+#    logging is arguably more handy per queue that per conf, and we can't do that by using
 #    several conf files to specfiy 1 queue (as it stands)
 # ** Add pause/continue functionality (USR2/CONT)
 # ** Add kill child functionality (USR1)
-# ** Bug where monit either removes a PID file, or fails to write one, resulting in at least 
+# ** Bug where monit either removes a PID file, or fails to write one, resulting in at least
 #    one rogue worker.<< DONE Hopefuly!
 
 usage() {
@@ -43,7 +43,7 @@ usage() {
 if [ $# -lt 3 ]; then usage; fi
 
 if [ "`whoami`" != "root" ]; then
-  logger -t `basename $0` -s "Must be run as root" 
+  logger -t `basename $0` -s "Must be run as root"
   exit 1
 fi
 
@@ -77,7 +77,7 @@ fi
 
 if [ -d $APP_ROOT ]; then
   USER=$(stat -L -c"%U" $APP_ROOT)
-  export HOME="/home/$USER" 
+  export HOME="/home/$USER"
 
   # Fix for SD-3786 - stop sending in VERBOSE= and VVERBOSE= by default
   if declare -p VERBOSE >/dev/null 2>&1; then export V="VERBOSE=$VERBOSE"; fi
@@ -94,7 +94,7 @@ if [ -d $APP_ROOT ]; then
   if [ -f $LOCK_FILE ]; then
     logger -t "monit-resquescheduler[$$]:" "Monit already messing with $WORKER_REF (`cat $LOCK_FILE`)"
     clean_exit 1
-  else 
+  else
     echo $$ > $LOCK_FILE
   fi
 
@@ -117,7 +117,7 @@ if [ -d $APP_ROOT ]; then
         RESULT=$?
         logger -t "monit-resquescheduler[$$]:" "Started with pid $! and exit $RESULT"
         #while [ ! -f $PID_FILE ]
-        #do 
+        #do
           echo $! > $PID_FILE
           sleep .1
         #done
