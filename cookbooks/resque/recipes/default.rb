@@ -52,6 +52,14 @@ if ['solo', 'util'].include?(node[:instance_role])
       source 'resque_long_and_short_tasks.conf.erb'
     end
 
+    template "/data/#{app}/shared/config/resque_3.conf" do
+      owner node[:owner_name]
+      group node[:owner_name]
+      mode 0644
+      source 'resque_emailer.conf.erb'
+    end
+
+
     execute "ensure-resque-is-setup-with-monit" do
       epic_fail true
       command %Q{
