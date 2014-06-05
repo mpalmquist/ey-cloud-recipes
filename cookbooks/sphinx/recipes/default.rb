@@ -140,7 +140,7 @@ if utility_name
       end
 
       execute "#{flavor} index" do
-        command "bundle exec rake #{flavor}:index"
+        command "bundle exec rake #{flavor}:rebuild"
         user node[:owner_name]
         environment({
           'HOME' => "/home/#{node[:owner_name]}",
