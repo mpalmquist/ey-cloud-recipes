@@ -29,7 +29,11 @@ utility_name = nil
 
 cron_interval = 30 #If this is not set your data will NOT be indexed
 
-if utility_name
+
+if ! File.exists?("/data/#{appname}/current")
+  Chef::Log.info "Sphinx was not configured because the app must be deployed first.  Please deploy it then re-run custom recipes."
+else
+  if utility_name
   sphinx_host = node[:utility_instances].find {|u| u[:name] == utility_name }[:hostname]
   if ['solo', 'app', 'app_master'].include?(node[:instance_role])
     run_for_app(appname) do |app_name, data|
@@ -165,7 +169,7 @@ if utility_name
       end
     end
   end
-else
+  else
   if ['solo', 'app', 'app_master'].include?(node[:instance_role])
     run_for_app(appname) do |app_name, data|
       ey_cloud_report "Sphinx" do
@@ -273,5 +277,6 @@ else
       #   end
       # end
     end
+  end
   end
 end
