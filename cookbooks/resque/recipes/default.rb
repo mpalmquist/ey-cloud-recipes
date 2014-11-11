@@ -8,7 +8,7 @@ if ['solo', 'util'].include?(node[:instance_role])
     not_if { "gem list | grep resque" }
   end
 
-  worker_count = 4
+  worker_count = 2
 
   # case node[:ec2][:instance_type]
   # when 'm1.small' then worker_count = 2
@@ -30,33 +30,49 @@ if ['solo', 'util'].include?(node[:instance_role])
       })
     end
 
+
     template "/data/#{app}/shared/config/resque_0.conf" do
       owner node[:owner_name]
       group node[:owner_name]
       mode 0644
-      source 'resque_short_tasks.conf.erb'
+      source 'resque_all_tasks.conf.erb'
     end
 
     template "/data/#{app}/shared/config/resque_1.conf" do
       owner node[:owner_name]
       group node[:owner_name]
       mode 0644
-      source 'resque_no_parallel_execution.conf.erb'
+      source 'resque_all_tasks.conf.erb'
     end
 
-    template "/data/#{app}/shared/config/resque_2.conf" do
-      owner node[:owner_name]
-      group node[:owner_name]
-      mode 0644
-      source 'resque_long_and_short_tasks.conf.erb'
-    end
 
-    template "/data/#{app}/shared/config/resque_3.conf" do
-      owner node[:owner_name]
-      group node[:owner_name]
-      mode 0644
-      source 'resque_emailer.conf.erb'
-    end
+    # template "/data/#{app}/shared/config/resque_0.conf" do
+    #   owner node[:owner_name]
+    #   group node[:owner_name]
+    #   mode 0644
+    #   source 'resque_short_tasks.conf.erb'
+    # end
+
+    # template "/data/#{app}/shared/config/resque_1.conf" do
+    #   owner node[:owner_name]
+    #   group node[:owner_name]
+    #   mode 0644
+    #   source 'resque_no_parallel_execution.conf.erb'
+    # end
+
+    # template "/data/#{app}/shared/config/resque_2.conf" do
+    #   owner node[:owner_name]
+    #   group node[:owner_name]
+    #   mode 0644
+    #   source 'resque_long_and_short_tasks.conf.erb'
+    # end
+
+    # template "/data/#{app}/shared/config/resque_3.conf" do
+    #   owner node[:owner_name]
+    #   group node[:owner_name]
+    #   mode 0644
+    #   source 'resque_emailer.conf.erb'
+    # end
 
 
     execute "ensure-resque-is-setup-with-monit" do
