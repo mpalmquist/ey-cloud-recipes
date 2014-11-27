@@ -34,14 +34,14 @@ if ['solo', 'util'].include?(node[:instance_role])
       owner node[:owner_name]
       group node[:owner_name]
       mode 0644
-      source 'resque_short_tasks.conf.erb'
+      source 'resque_short_tasks_1.conf.erb'
     end
 
     template "/data/#{app}/shared/config/resque_1.conf" do
       owner node[:owner_name]
       group node[:owner_name]
       mode 0644
-      source 'resque_short_tasks.conf.erb'
+      source 'resque_short_tasks_2.conf.erb'
     end
 
     template "/data/#{app}/shared/config/resque_2.conf" do
