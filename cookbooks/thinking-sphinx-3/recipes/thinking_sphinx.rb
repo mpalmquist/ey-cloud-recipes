@@ -38,6 +38,10 @@ node[:sphinx][:apps].each do |app_name|
       to "#{current_path}/config/thinking_sphinx.yml"
     end
 
+    out = `ls -l /data/SolarNexus3/current/config`
+    Chef::Log.info out
+    puts out
+
     if util_or_app_server?(node[:sphinx][:utility_name])
       # create sphinx directory
       directory "#{shared_path}/sphinx" do
