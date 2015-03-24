@@ -30,6 +30,7 @@ node[:sphinx][:apps].each do |app_name|
 
     #symlink config yml
     link "#{shared_path}/config/thinking_sphinx.yml" do
+      Chef::Log.info "linking thinking_sphinx.yml to current path"
       owner node[:owner_name]
       group node[:owner_name]
       mode "0644"
