@@ -30,6 +30,9 @@ node[:sphinx][:apps].each do |app_name|
 
     #symlink config yml
     link "#{shared_path}/config/thinking_sphinx.yml" do
+      owner node[:owner_name]
+      group node[:owner_name]
+      mode "0644"
       to "#{current_path}/config/thinking_sphinx.yml"
     end
 
