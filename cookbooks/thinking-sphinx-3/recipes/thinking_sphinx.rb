@@ -29,15 +29,16 @@ node[:sphinx][:apps].each do |app_name|
     end
 
     #symlink config yml
-    link "#{shared_path}/config/thinking_sphinx.yml" do
-      Chef::Log.info "LINKING thinking_sphinx.yml to current path"
-      puts "LINKING thinking_sphinx.yml to current path"
-      owner node[:owner_name]
-      group node[:owner_name]
-      mode "0644"
-      to "#{current_path}/config/thinking_sphinx.yml"
-    end
+    # link "#{shared_path}/config/thinking_sphinx.yml" do
+    #   Chef::Log.info "LINKING thinking_sphinx.yml to current path"
+    #   puts "LINKING thinking_sphinx.yml to current path"
+    #   owner node[:owner_name]
+    #   group node[:owner_name]
+    #   mode "0644"
+    #   to "#{current_path}/config/thinking_sphinx.yml"
+    # end
 
+    `ln #{shared_path}/config/thinking_sphinx.yml #{current_path}/config/thinking_sphinx.yml`
     out = `ls -l /data/SolarNexus3/current/config`
     Chef::Log.info out
     puts out
