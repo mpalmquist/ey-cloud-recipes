@@ -14,8 +14,8 @@ node[:sphinx][:apps].each do |app_name|
   if File.symlink?(current_path)
     # config yml
     template "#{shared_path}/config/thinking_sphinx.yml" do
-      Chef::Log.info "CREATING thinking_sphinx.yml for #{node.inspect}"
-      puts "CREATING thinking_sphinx.yml for #{node.inspect}"
+      Chef::Log.info "CREATING thinking_sphinx.yml for user #{node[:owner_name]}"
+      puts "CREATING thinking_sphinx.yml for user #{node[:owner_name]}"
       source "thinking_sphinx.yml.erb"
       owner node[:owner_name]
       group node[:owner_name]
