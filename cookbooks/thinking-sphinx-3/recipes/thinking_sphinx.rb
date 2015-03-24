@@ -14,6 +14,8 @@ node[:sphinx][:apps].each do |app_name|
   if File.symlink?(current_path)
     # config yml
     template "#{shared_path}/config/thinking_sphinx.yml" do
+      Chef::Log.info "CREATING thinking_sphinx.yml for #{node.inspect}"
+      puts "CREATING thinking_sphinx.yml for #{node.inspect}"
       source "thinking_sphinx.yml.erb"
       owner node[:owner_name]
       group node[:owner_name]
@@ -58,8 +60,8 @@ node[:sphinx][:apps].each do |app_name|
 
       # configure thinking sphinx
       execute "configure sphinx" do
-        command "cd #{current_path} && bundle exec rake ts:configure"
         Chef::Log.info "Configuring thinking_sphinx as user #{node[:owner_name]}"
+        command "cd #{current_path} && bundle exec rake ts:configure"
         user node[:owner_name]
         environment 'RAILS_ENV' => env
       end
