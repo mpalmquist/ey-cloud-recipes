@@ -38,7 +38,12 @@ node[:sphinx][:apps].each do |app_name|
     #   to "#{current_path}/config/thinking_sphinx.yml"
     # end
 
-    `ln #{shared_path}/config/thinking_sphinx.yml #{current_path}/config/thinking_sphinx.yml`
+    file="#{current_path}/config/thinking_sphinx.yml"
+    if File.exist?(file)
+      File.unlink(file)
+    end
+
+    `ln #{shared_path}/config/thinking_sphinx.yml #{file}`
     out = `ls -l /data/SolarNexus3/current/config`
     Chef::Log.info out
     puts out
