@@ -8,7 +8,12 @@ if ['solo', 'util'].include?(node[:instance_role])
     not_if { "gem list | grep resque" }
   end
 
-  worker_count = 4
+
+  case node[:ec2][:instance_type]
+  when 'm3.xlarge' then worker_count = 6
+  else
+    worker_count = 5
+  end
 
   # case node[:ec2][:instance_type]
   # when 'm1.small' then worker_count = 2
@@ -56,6 +61,20 @@ if ['solo', 'util'].include?(node[:instance_role])
       group node[:owner_name]
       mode 0644
       source 'resque_pv_watts.conf.erb'
+    end
+
+    template "/data/#{app}/shared/config/resque_4.conf" do
+      owner node[:owner_name]
+      group node[:owner_name]
+      mode 0644
+      source 'resque_urgent_tasks.conf.erb'
+    end
+
+    template "/data/#{app}/shared/config/resque_5.conf" do
+      owner node[:owner_name]
+      group node[:owner_name]
+      mode 0644
+      source 'resque_urgent_tasks.conf.erb'
     end
 
     execute "ensure-resque-is-setup-with-monit" do
