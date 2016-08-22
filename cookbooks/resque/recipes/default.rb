@@ -8,12 +8,7 @@ if ['solo', 'util'].include?(node[:instance_role])
     not_if { "gem list | grep resque" }
   end
 
-
-  case node[:ec2][:instance_type]
-  when 'm3.xlarge' then worker_count = 6
-  else
-    worker_count = 5
-  end
+  worker_count = 6
 
   # case node[:ec2][:instance_type]
   # when 'm1.small' then worker_count = 2
