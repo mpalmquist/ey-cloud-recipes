@@ -1,4 +1,5 @@
 if ['app_master', 'app', 'solo', 'util'].include?(node[:instance_role])
+  Chef::Log.info "Creating redis.yml"
 
   # If you have only one utility instance uncomment the line below
   #redis_instance = node['utility_instances'].first
