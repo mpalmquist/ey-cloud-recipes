@@ -10,6 +10,7 @@
 # require_recipe "ey-passenger-tweaks"
 
 include_recipe "redis"
+include_recipe "redis-yml"
 include_recipe "thinking-sphinx-3"
 include_recipe "emerge"
 include_recipe "whenever"
@@ -71,7 +72,7 @@ include_recipe "ban"
 include_recipe "resque"
 
 #uncomment to run redis.yml recipe
-# include_recipe "redis-yml"
+
 
 #uncomment to run the resque-scheduler recipe
 include_recipe "resque-scheduler"

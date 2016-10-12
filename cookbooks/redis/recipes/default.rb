@@ -77,7 +77,7 @@ end
 
 Chef::Log.info "Configuring redis, node role is #{node[:instance_role]}"
 
-if ['solo', 'app', 'app_master', 'util'].include?(node[:instance_role])
+if ['solo', 'db_master'].include?(node[:instance_role])
   instances = node[:engineyard][:environment][:instances]
   redis_instance = if instances.length == 1
                      instances[0]
