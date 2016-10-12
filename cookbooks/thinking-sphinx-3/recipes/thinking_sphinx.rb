@@ -3,6 +3,8 @@
 # Recipe:: thinking_sphinx
 #
 
+Chef::Log.info "Configuring thinking_sphinx, node role is #{node[:instance_role]}"
+
 # setup thinking sphinx on each app (see attributes)
 node[:sphinx][:apps].each do |app_name|
   # variables
@@ -15,7 +17,6 @@ node[:sphinx][:apps].each do |app_name|
     # config yml
     template "#{shared_path}/config/thinking_sphinx.yml" do
       Chef::Log.info "CREATING thinking_sphinx.yml for user #{node[:owner_name]}"
-      puts "CREATING thinking_sphinx.yml for user #{node[:owner_name]}"
       source "thinking_sphinx.yml.erb"
       owner node[:owner_name]
       group node[:owner_name]
