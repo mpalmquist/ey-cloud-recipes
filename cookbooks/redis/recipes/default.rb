@@ -46,13 +46,13 @@ if ['util'].include?(node[:instance_role])
         :rdbcompression => node[:redis][:rdbcompression],
       })
     end
-    
+
     # redis-server is in /usr/bin on stable-v2, /usr/sbin for stable-v4
     if Chef::VERSION[/^0.6/]
       bin_path = "/usr/bin/redis-server"
     else
       bin_path = "/usr/sbin/redis-server"
-    end  
+    end
 
     template "/data/monit.d/redis_util.monitrc" do
       owner 'root'
@@ -77,8 +77,11 @@ end
 
 if ['solo', 'app', 'app_master', 'util'].include?(node[:instance_role])
   instances = node[:engineyard][:environment][:instances]
-  redis_instance = (node[:instance_role][/solo/] && instances.length == 1) ? instances[0] : instances.find{|i| i[:name].to_s[/redis/]}
-
+  redis_instance = if instances.length == 1
+                     instances[0]
+                   else
+                     instances.find{|i| i[:name].to_s[/redis|app_master/]}
+                   end
   if redis_instance
     ip_address = `ping -c 1 #{redis_instance[:private_hostname]} | awk 'NR==1{gsub(/\\(|\\)/,"",$3); print $3}'`.chomp
     host_mapping = "#{ip_address} redis_instance"
