@@ -3,12 +3,13 @@
 # Attrbutes:: default
 #
 
+instances = node[:engineyard][:environment][:instances]
 default[:sphinx] = {
   # Sphinx will be installed on to application/solo instances,
   # unless a utility name is set, in which case, Sphinx will
   # only be installed on to a utility instance that matches
   # the name
-  # :utility_name => 'sphinx',
+  :utility_name => instances.size == 1 ? 'solo' : 'app_master',
 
   # The version of sphinx to install
   :version => '2.0.8',
@@ -26,7 +27,7 @@ default[:sphinx] = {
 # Note: You do not need to edit below this line
 
 # Store sphinx node as attribute
-util = node[:engineyard][:environment][:instances].find{|i| i[:name].to_s == default[:sphinx][:utility_name]}
+util = instances.find{|i| i[:name].to_s == default[:sphinx][:utility_name]}
 Chef::Log.info "SPHINX INSTANCE: #{util.inspect}"
 
 default[:sphinx][:host] = util ? util[:private_hostname] : '127.0.0.1'
