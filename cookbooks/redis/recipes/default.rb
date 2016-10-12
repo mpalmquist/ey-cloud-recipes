@@ -84,7 +84,7 @@ if ['solo', 'app', 'app_master', 'util'].include?(node[:instance_role])
                    else
                      instances.find{|i| i[:name].to_s[/redis|app_master/]}
                    end
-  Chef::Log.info "redis_instance=#{redis_instance.andand.inspect}"
+  Chef::Log.info "redis_instance=#{redis_instance.try(:inspect)}"
   if redis_instance
     ip_address = `ping -c 1 #{redis_instance[:private_hostname]} | awk 'NR==1{gsub(/\\(|\\)/,"",$3); print $3}'`.chomp
     host_mapping = "#{ip_address} redis_instance"
