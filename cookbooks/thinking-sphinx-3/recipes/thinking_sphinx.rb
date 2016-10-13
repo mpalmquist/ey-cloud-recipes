@@ -2,8 +2,6 @@
 # Cookbook Name:: sphinx
 # Recipe:: thinking_sphinx
 #
-
-include_recipe "redis-yml"
 Chef::Log.info "Configuring thinking_sphinx, node role is #{node[:instance_role]}"
 # setup thinking sphinx on each app (see attributes)
 node[:sphinx][:apps].each do |app_name|

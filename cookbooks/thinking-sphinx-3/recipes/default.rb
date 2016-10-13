@@ -3,6 +3,7 @@
 # Recipe:: default
 #
 
+# if solo? || !db_server?
 if solo? || !db_server?
   include_recipe "thinking-sphinx-3::cleanup"
   include_recipe "thinking-sphinx-3::install"
