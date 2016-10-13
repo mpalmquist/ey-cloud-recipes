@@ -3,7 +3,7 @@
 # Recipe:: default
 #
 
-if ['util'].include?(node[:instance_role])
+if ['util', 'app_master'].include?(node[:instance_role])
 
   sysctl "Enable Overcommit Memory" do
     variables 'vm.overcommit_memory' => 1
