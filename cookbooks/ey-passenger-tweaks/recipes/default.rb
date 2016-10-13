@@ -16,11 +16,11 @@ if ['app_master', 'app', 'solo'].include?(node[:instance_role])
     action :enable
   end
 
-  execute "Alter passenger_max_pool_size" do
-    command "sed -i -r 's/passenger_max_pool_size [0-9]+;/passenger_max_pool_size #{worker_count};/' /etc/nginx/stack.conf"
-    notifies :restart, resources(:service => 'nginx')
-    not_if "grep 'passenger_max_pool_size #{worker_count}' /etc/nginx/stack.conf'"
-  end
+  # execute "Alter passenger_max_pool_size" do
+  #   command "sed -i -r 's/passenger_max_pool_size [0-9]+;/passenger_max_pool_size #{worker_count};/' /etc/nginx/stack.conf"
+  #   notifies :restart, resources(:service => 'nginx')
+  #   not_if "grep 'passenger_max_pool_size #{worker_count}' /etc/nginx/stack.conf'"
+  # end
 
   cron "passenger_monitor_#{app_name}" do
     minute  '*'
