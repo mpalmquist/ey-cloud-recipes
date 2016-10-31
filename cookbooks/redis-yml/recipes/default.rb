@@ -1,11 +1,12 @@
-if ['app_master', 'app', 'solo', 'util'].include?(node[:instance_role])
+if ['app_master', 'app', 'solo'].include?(node[:instance_role])
   Chef::Log.info "Creating redis.yml"
 
   # If you have only one utility instance uncomment the line below
   #redis_instance = node['utility_instances'].first
   # Otherwise, if you have multiple utility instances you can specify it by uncommenting the line below
   # You can change the name of the instance based on whatever name you have chosen for your instance.
-  redis_instance = node['utility_instances'].find { |instance| instance['name'] == 'db_master' }
+  # redis_instance = node['utility_instances'].find { |instance| instance['name'] == 'redis' }
+  redis_instance = node['utility_instances'].first
 
   if redis_instance
     node[:applications].each do |app, data|
