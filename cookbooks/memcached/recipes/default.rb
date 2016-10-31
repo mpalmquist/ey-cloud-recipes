@@ -25,8 +25,7 @@ node[:applications].each do |app_name,data|
       group 'root'
       mode 0644
       source "memcached.erb"
-      variables :memusage => 64,
-      :port     => 11211
+      variables :memusage => 64, :port => 11211
     end
   end
 end
