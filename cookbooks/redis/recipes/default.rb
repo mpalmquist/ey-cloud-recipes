@@ -3,7 +3,7 @@
 # Recipe:: default
 #
 
-if ['solo', 'app_master', 'redis'].include?(node[:instance_role])
+if ['solo', 'util'].include?(node[:instance_role])
 
   sysctl "Enable Overcommit Memory" do
     variables 'vm.overcommit_memory' => 1
@@ -74,13 +74,12 @@ if ['solo', 'app_master', 'redis'].include?(node[:instance_role])
 end
 
 Chef::Log.info "Configuring redis, node role is #{node[:instance_role]}"
-
-if ['solo', 'app_master'].include?(node[:instance_role])
+if ['solo', 'util'].include?(node[:instance_role])
   instances = node[:engineyard][:environment][:instances]
   redis_instance = if instances.length == 1
                      instances[0]
                    else
-                     instances.detect{|i| i[:name] == 'util'}
+                     instances.detect{|i| i[:instance_role] == 'util'}
                    end
   Chef::Log.info "redis_instance=#{redis_instance}"
   if redis_instance
