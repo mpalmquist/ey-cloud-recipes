@@ -67,9 +67,29 @@ if ['solo', 'util'].include?(node[:instance_role])
                 :bin_path => bin_path
               })
   end
-
   execute "monit reload" do
     action :run
+  end
+else
+  ey_cloud_report "redis" do
+    message "Cleaning up redis"
+  end
+  node[:applications].each do |app_name, _|
+    # monit
+    file "/etc/monit.d/redis.monitrc" do
+      action :delete
+      notifies :run, resources(:execute => "reload-monit")
+      only_if "test -f /etc/monit.d/redis.monitrc"
+    end
+    file "/etc/monit.d/redis_util.monitrc" do
+      action :delete
+      notifies :run, resources(:execute => "reload-monit")
+      only_if "test -f /etc/monit.d/redis.monitrc"
+    end
+  end
+  execute "kill-redis" do
+    command "pkill -f redis-server"
+    only_if "pgrep -f redis-server"
   end
 end
 
