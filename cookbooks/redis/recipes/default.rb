@@ -3,6 +3,11 @@
 # Recipe:: default
 #
 
+execute "reload-monit" do
+  command "monit quit && telinit q"
+  action :nothing
+end
+
 if ['solo', 'util'].include?(node[:instance_role])
 
   sysctl "Enable Overcommit Memory" do
