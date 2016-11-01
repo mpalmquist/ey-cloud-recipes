@@ -47,7 +47,7 @@ node[:sphinx][:apps].each do |app_name|
     Chef::Log.info out
     puts out
 
-    if util_or_app_server?(node[:sphinx][:utility_name])
+    if solo? || util?
       # create sphinx directory
       directory "#{shared_path}/sphinx" do
         owner node[:owner_name]
