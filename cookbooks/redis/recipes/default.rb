@@ -81,15 +81,12 @@ else
   end
   node[:applications].each do |app_name, _|
     # monit
-    file "/etc/monit.d/redis.monitrc" do
-      action :delete
-      notifies :run, resources(:execute => "reload-monit")
-      only_if "test -f /etc/monit.d/redis.monitrc"
-    end
-    file "/etc/monit.d/redis_util.monitrc" do
-      action :delete
-      notifies :run, resources(:execute => "reload-monit")
-      only_if "test -f /etc/monit.d/redis.monitrc"
+    ["/etc/monit.d/redis.monitrc", "/etc/monit.d/redis_util.monitrc"].each do |rc|
+      file rc do
+        action :delete
+        notifies :run, resources(:execute => "reload-monit")
+        only_if "test -f #{rc}"
+      end
     end
   end
   execute "kill-redis" do
