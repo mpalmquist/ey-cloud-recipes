@@ -20,11 +20,14 @@ node[:sphinx][:apps].each do |app_name|
       group node[:owner_name]
       mode "0644"
       backup 0
-      variables({
-        :environment => env,
-        :address => node[:sphinx][:host],
-        :pid_file => "#{shared_path}/log/#{env}.sphinx.pid"
-      })
+      variables({ :environment => env,
+                  :address => node[:utility_instances].first[:hostname],
+                  :pid_file => "#{shared_path}/log/#{env}.sphinx.pid",
+                  :log_file => "/var/log/engineyard/sphinx/searchd.log",
+                  :query_log_file => "/var/log/engineyard/sphinx/query.log",
+                  :config_file => "/data/SolarNexus3/shared/config/sphinx/#{env}.sphinx.conf",
+                  :indices_location => "/data/SolarNexus3/shared/sphinx/indexes"
+                })
     end
 
     #symlink config yml
