@@ -4,7 +4,7 @@
 #
 
 # if solo? || !db_server?
-if solo? || !db_server?
+if solo? || util?
   include_recipe "thinking-sphinx-3::cleanup"
   include_recipe "thinking-sphinx-3::install"
   include_recipe "thinking-sphinx-3::thinking_sphinx"
