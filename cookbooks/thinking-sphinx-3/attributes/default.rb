@@ -4,7 +4,6 @@
 #
 
 instances = node[:engineyard][:environment][:instances]
-Chef::Log.info node[:engineyard][:environment].inspect
 default[:sphinx] = {
   # Sphinx will be installed on to application/solo instances,
   # unless a utility name is set, in which case, Sphinx will
@@ -15,7 +14,7 @@ default[:sphinx] = {
                    elsif instances.size == 2
                      'app_master'
                    else
-                     node[:engineyard][:environment]["utility_instances"].first[:name]
+                     node[:engineyard][:environment][:instances].detect { |i| i[:role] == 'util'}
                    end,
   # The version of sphinx to install
   :version => '2.0.8',
