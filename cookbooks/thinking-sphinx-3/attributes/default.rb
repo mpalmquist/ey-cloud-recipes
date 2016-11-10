@@ -9,8 +9,13 @@ default[:sphinx] = {
   # unless a utility name is set, in which case, Sphinx will
   # only be installed on to a utility instance that matches
   # the name
-  :utility_name => instances.size == 1 ? 'solo' : 'app_master',
-
+  :utility_name => if instances.size == 1
+                     'solo'
+                   elsif instances.size == 2
+                     'app_master'
+                   else
+                     node[:engineyard][:environment][:utility_instances].first[:name]
+                   end,
   # The version of sphinx to install
   :version => '2.0.8',
 
