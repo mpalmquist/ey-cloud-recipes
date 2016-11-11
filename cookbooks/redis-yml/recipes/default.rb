@@ -6,8 +6,9 @@ if ['app_master', 'app', 'solo', 'util'].include?(node[:instance_role])
   # Otherwise, if you have multiple utility instances you can specify it by uncommenting the line below
   # You can change the name of the instance based on whatever name you have chosen for your instance.
   # redis_instance = node['utility_instances'].find { |instance| instance['name'] == 'db_master' }
-  redis_instance = node['instances'].detect{ |i| i['instance_role'] == 'util' } ||
-    node['instances'].detect{ |i| i['instance_role'] == 'app_master'}
+  instances = node[:engineyard][:environment][:instances]
+  redis_instance = instances.detect{ |i| i['instance_role'] == 'util' } ||
+    instances.detect{ |i| i['instance_role'] == 'app_master'}
 
   if redis_instance
     node[:applications].each do |app, data|
