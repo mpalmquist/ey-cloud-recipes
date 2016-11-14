@@ -64,6 +64,8 @@ node[:sphinx][:apps].each do |app_name|
         only_if "test -d #{current_path}/db/sphinx"
       end
 
+      FileUtils.mkpath "#{current_path}/db"
+
       # symlink
       link "#{current_path}/db/sphinx" do
         to "#{shared_path}/sphinx"
