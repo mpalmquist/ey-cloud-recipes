@@ -14,6 +14,7 @@ include_recipe "redis-yml"
 include_recipe "thinking-sphinx-3"
 include_recipe "emerge"
 include_recipe "memcached"
+include_recipe "imagemagick"
 # include_recipe "whenever"
 
 # uncomment to turn on thinking sphinx 2/ultra sphinx. Remember to edit cookbooks/sphinx/recipes/default.rb first!
