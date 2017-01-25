@@ -52,3 +52,7 @@ remote_file "/etc/ImageMagick-6/policy.xml" do
   mode 0644
   backup 0
 end
+
+execute 'ldconfig' do
+  command 'sudo ldconfig /usr/local/lib'
+end
