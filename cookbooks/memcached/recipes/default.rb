@@ -20,7 +20,7 @@ node[:applications].each do |app_name,data|
       mode 0744
       variables({
                   :app_name => app_name,
-                  :server_name => node[:utility_instances].first.andand[:hostname] || 'localhost'
+                  :server_name => node[:utility_instances].first ? node[:utility_instances].first[:hostname] : 'localhost'
                 })
     end
   end
