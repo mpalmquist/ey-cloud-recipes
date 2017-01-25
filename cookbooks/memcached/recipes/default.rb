@@ -34,6 +34,13 @@ node[:applications].each do |app_name,data|
       source "memcached.erb"
       variables :memusage => 64, :port => 11211
     end
+    template "/etc/monit.d/memcached.monitrc" do
+      owner 'root'
+      group 'root'
+      mode 0644
+      source "memcached.monitrc"
+      notifies :run, resources(:execute => "reload-monit")
+    end
   else
     Chef::Log.info "Clean up memcached, instance role #{node[:instance_role]}"
     file "/etc/monit.d/memcached.monitrc" do
