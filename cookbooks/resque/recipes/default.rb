@@ -80,6 +80,15 @@ if ['solo', 'util'].include?(node[:instance_role])
     end
   end
 else
+  node[:applications].each do |app, data|
+    ['resque_scheduler', 'resque'].each do |f|
+      file "/etc/monit.d/#{f}_#{app}.monitrc" do
+        action :delete
+        notifies :run, resources(:execute => "reload-monit")
+        only_if "test -f /etc/monit.d/#{f}_#{app}.monitrc"
+      end
+    end
+  end
   execute "remove resque gem" do
     command "gem uninstall resque redis redis-namespace yajl-ruby"
     only_if { "gem list | grep resque" }
