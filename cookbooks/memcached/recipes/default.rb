@@ -33,18 +33,18 @@ node[:applications].each do |app_name,data|
     end
   else
     Chef::Log.info "Clean up memcached, instance role #{node[:instance_role]}"
-    # file "/etc/monit.d/memcached.monitrc" do
-    #   action :delete
-    #   notifies :run, resources(:execute => "reload-monit")
-    #   only_if "test -f /etc/monit.d/memcached.monitrc"
-    # end
-    # file "/etc/conf.d/memcached" do
-    #   action :delete
-    #   only_if "test -f /etc/conf.d/memcached"
-    # end
-    # execute "kill-memcached" do
-    #   command "pkill -f memcached"
-    #   only_if "pgrep -f memcached"
-    # end
+    file "/etc/monit.d/memcached.monitrc" do
+      action :delete
+      notifies :run, resources(:execute => "reload-monit")
+      only_if "test -f /etc/monit.d/memcached.monitrc"
+    end
+    file "/etc/conf.d/memcached" do
+      action :delete
+      only_if "test -f /etc/conf.d/memcached"
+    end
+    execute "kill-memcached" do
+      command "pkill -f memcached"
+      only_if "pgrep -f memcached"
+    end
   end
 end
