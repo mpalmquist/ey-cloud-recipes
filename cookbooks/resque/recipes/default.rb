@@ -79,4 +79,9 @@ if ['solo', 'util'].include?(node[:instance_role])
       }
     end
   end
+else
+  execute "remove resque gem" do
+    command "gem uninstall resque redis redis-namespace yajl-ruby"
+    only_if { "gem list | grep resque" }
+  end
 end
