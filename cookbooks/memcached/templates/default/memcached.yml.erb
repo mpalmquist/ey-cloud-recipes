@@ -21,9 +21,5 @@ defaults:
   benchmarking: false
   sessions: false
   fragments: true
-  <% if !@server_names.nil? && !@server_names.empty? %>
   servers:
-  <% @server_names.each do |server_name| %>
-  - <%= server_name %>:11211
-  <% end %>
-  <% end %>
+    - <%= @server_name %>:11211
