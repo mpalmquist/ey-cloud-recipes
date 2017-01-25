@@ -2,6 +2,12 @@
 # Cookbook Name:: resque
 # Recipe:: default
 #
+
+execute "reload-monit" do
+  command "monit quit && telinit q"
+  action :nothing
+end
+
 if ['solo', 'util'].include?(node[:instance_role])
   execute "install resque gem" do
     command "gem install resque redis redis-namespace yajl-ruby -r"
